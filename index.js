@@ -8,7 +8,7 @@ const {router: fitRoutes} = require("./src/routes/fit");
 
 app.use(bodyParser.json());
 app.use(cors());
-app.use('/api/fit', fitRoutes);
+app.use('/api/', fitRoutes);
 
 const PORT = 4040;
 app.listen(PORT, () => {
