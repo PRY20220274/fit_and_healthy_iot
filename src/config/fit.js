@@ -22,7 +22,7 @@ const scopes = [
 
 const getUrl = async () => {
     const url = oAuth2Client.generateAuthUrl({
-        access_type: 'offline',
+        access_type: 'online',
         scope: scopes,
     });
     return url;
