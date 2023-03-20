@@ -54,11 +54,13 @@ const refreshAccess = async (req, res) => {
 
 const getFit = async (req, res) => {
     const tokens = req.body;
+    console.log('TOKENS');
+    tokens.expiry_date = Number(tokens.expiry_date);
+    console.log(tokens);
     try {
-        const url = await FitService.getFit(tokens);
-        return res.status(201).send({ 'url' : url });
+        const fit = await FitService.getFit(tokens);
+        return res.status(200).send(fit);
     } catch (err) {
-        console.log(err);
         if(err.status) {
             return res.status(err.status).json({
                 message: err.message,

@@ -22,14 +22,14 @@ const scopes = [
 
 const getUrl = async () => {
     const url = oAuth2Client.generateAuthUrl({
-        access_type: 'online',
+        access_type: 'offline',
         scope: scopes,
     });
     return url;
 }
 
 const getTokens = async (code) => {
-    const tokens = await oAuth2Client.getToken(code);
+    const { tokens } = await oAuth2Client.getToken(code);
     return tokens;
 }
 
@@ -43,26 +43,53 @@ const getResponseFit = async (access) => {
 
     const startDate = Date.now() - 7 * 24 * 60 * 60 * 1000; // hace 7 días
     const endDate = Date.now(); // ahora
+    
 
     const fitness = google.fitness({
         version: 'v1',
         auth: oAuth2Client,
     });
 
-    const dataReadRequest = {
-        aggregateBy: [{
-          dataTypeName: 'com.google.step_count.delta',
-        }],
-        bucketByTime: {
-          durationMillis: 86400000,
-        },
-        startDate,
-        endDate,
-    };
+    fitness.users.dataSources.list({
+      userId: 'me'
+    }, (err, res) => {
+      if (err) {
+        console.error(err);
+        return;
+      }
+      console.log(res.data);
+    });
 
-    fitness.users.dataset.aggregate({
+    /*const calories = await fitness.users.dataSources.datasets.get({
+      userId: 'me',
+      dataSourceId: 'derived:com.google.calories.bmr:com.google.android.gms:merged',
+      datasetId: `${startDate}-${endDate}`,
+    }, (err, res) => {
+      if (err) {
+        console.error(err);
+        return;
+      }
+      console.log(res.data);
+      const point = res.data.point[0];
+      console.log(point);
+      return res.data;
+    });*/
+
+    console.log(calories);
+
+    /*fitness.users.dataset.aggregate({
         userId: 'me',
-        requestBody: dataReadRequest,
+        requestBody: {
+          "aggregateBy": [
+            {
+              "dataTypeName": "com.google.oxygen_saturation.summary",
+              "dataSourceId": "derived:com.google.oxygen_saturation:com.google.android.gms:from_data_source"
+            }
+          ],
+          "bucketByTime": { "durationMillis": 86400000 },
+          "startTimeMillis": startDate,
+          "endTimeMillis": endDate
+        },
       }, (err, res) => {
         if (err) {
           console.error('Error al obtener datos de Google Fit:', err);
@@ -70,7 +97,7 @@ const getResponseFit = async (access) => {
         }
         console.log('Datos de calorías de Google Fit:', res.data);
       }
-    );
+    );*/
 }
 
 module.exports = {
