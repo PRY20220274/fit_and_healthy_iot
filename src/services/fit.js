@@ -17,8 +17,7 @@ const refreshAccess = async (refresh_token) => {
 
 const getFit = async (tokens) => {
     const fit = await FitConfig.getResponseFit(tokens);
-    console.log(fit);
-    return {'message': 'The fit was retrieved'};
+    return fit;
 }
 
 module.exports = {

@@ -54,9 +54,7 @@ const refreshAccess = async (req, res) => {
 
 const getFit = async (req, res) => {
     const tokens = req.body;
-    console.log('TOKENS');
     tokens.expiry_date = Number(tokens.expiry_date);
-    console.log(tokens);
     try {
         const fit = await FitService.getFit(tokens);
         return res.status(200).send(fit);
