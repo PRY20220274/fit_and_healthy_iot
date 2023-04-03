@@ -124,41 +124,11 @@ const getBreathingRate = async (fitness) => {
   return breathingRate;
 }
 
-const getWidth = async (fitness) => {
-  let dataTypeName = 'com.google.weight';
-  const points = await getFitData(fitness, dataTypeName);
-  let width = 0;
-  if (points.length !== 0 ){
-    points.forEach((point) => {
-      value = point.value[0];
-      width = width + value.fpVal;
-    });
-    width = Number(width);
-  }
-  return width;
-}
-
-const getHeight = async (fitness) => {
-  let dataTypeName = 'com.google.height';
-  const points = await getFitData(fitness, dataTypeName);
-  let height = 0;
-  if (points.length !== 0 ){
-    points.forEach((point) => {
-      value = point.value[0];
-      height = height + value.fpVal;
-    });
-    height = Number(height.toFixed(2));
-  }
-  return height;
-}
-
 module.exports = {
   getCalories,
   getSteps,
   getKilometersTraveled,
   getCardioPoints,
   getHeartRate,
-  getBreathingRate,
-  getWidth,
-  getHeight
+  getBreathingRate
 }

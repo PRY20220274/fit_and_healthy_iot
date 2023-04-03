@@ -63,8 +63,6 @@ const getResponseFit = async (access) => {
   const cardioPoints = await Data.getCardioPoints(fitness);
   const heartRate = await Data.getHeartRate(fitness);
   const breathingRate = await Data.getBreathingRate(fitness);
-  const width = await Data.getWidth(fitness);
-  const height = await Data.getHeight(fitness);
 
   const fit = {
     calories, 
@@ -72,9 +70,7 @@ const getResponseFit = async (access) => {
     kilometersTraveled,
     cardioPoints,
     heartRate,
-    breathingRate,
-    width,
-    height
+    breathingRate
   }
   return fit;
 }
